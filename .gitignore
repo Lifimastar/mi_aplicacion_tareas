@@ -1,0 +1,16 @@
+# Ignorar carpetas de entornos virtuales
+venv/
+.venv/
+
+# Ignorar archivos de cache de Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# Ignorar archivos de VS Code
+.vscode/
+
+# Ignorar archivos de sistema operativo
+.DS_Store
+Thumbs.db
