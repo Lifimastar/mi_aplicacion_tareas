@@ -29,5 +29,29 @@ def home():
     conn.close()
     return render_template("index.html", tasks=tasks)
 
+@app.route("/complete/<int:task_id>")
+def complete_task(task_id):
+    """
+    Marca una tarea como completada.
+    """
+    conn = get_db_connection()
+    conn.execute("UPDATE tasks SET status = 'completada' WHERE id = ?", (task_id,))
+    conn.commit()
+    conn.close()
+    print(f"Tarea {task_id} marcada como completada.")
+    return redirect(url_for('home'))
+
+@app.route("/delete/<int:task_id>")
+def delete_task(task_id):
+    """
+    Elimina una tarea de la base de datos.
+    """
+    conn = get_db_connection()
+    conn.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
+    conn.commit()
+    conn.close()
+    print(f"Tarea {task_id} eliminada.")
+    return redirect(url_for('home'))
+
 if __name__ == "__main__":
     app.run(debug=True)

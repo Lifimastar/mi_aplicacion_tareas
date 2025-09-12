@@ -38,12 +38,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
         .task-item.completed {
             background-color: #d4edda;
             border-color: #c3e6cb;
             text-decoration: line-through;
             color: #6c757d;
+        }
+        .task-details {
+            flex-grow: 1;
         }
         .task-title {
             font-weight: bold;
@@ -54,12 +58,24 @@
             color: #6c757d;
             margin-top: 5px;
         }
+        .task-meta {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 5px;
+        }
+        .task-actions {
+            margin-left: 15px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
         .task-status {
             font-size: 0.8em;
             color: #007bff;
             background-color: #e0f7fa;
             padding: 3px 8px;
             border-radius: 12px;
+            white-space: nowrap;
         }
         .task-item.completed .task-status {
             background-color: #28a745;
@@ -77,13 +93,18 @@
             margin-bottom: 20px;
             border: 1px solid #e2e6ea;
         }
+        .add-task-form h2 {
+            margin-top: 0;
+            color: #0056b3;
+            font-size: 1.2em;
+        }
         .add-task-form label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
         .add-task-form input[type='text'],
-        .add-task-from textarea {
+        .add-task-form textarea {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 10px;
@@ -96,9 +117,6 @@
             min-height: 60px;
         }
         .add-task-form button {
-            display: block;
-            margin-top: 10px;
-
             background-color: #28a745;
             color: white;
             padding: 10px 20px;
@@ -109,6 +127,35 @@
         }
         .add-task-form button:hover {
             background-color: #218838;
+        }
+        .action-button {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        .action-button.complete {
+            background-color: #007bff;
+        }
+        .action-button.complete:hover {
+            background-color: #0056b3;
+        }
+        .action-button.delete {
+            background-color: #dc3545;
+        }
+        .action-button.delete:hover {
+            background-color: #c82333;
+        }
+        .task-item.completed .action-button.complete {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .task-item.completed .action-button.complete:hover {
+            background-color: #6c757d;
         }
     </style>
 </head>
@@ -133,14 +180,22 @@
             {% if tasks %}
                 {% for task in tasks %}
                     <div class="task-item {% if task.status == 'completada' %}completed{% endif %}">
-                        <div>
+                        <div class="task-details">
                             <div class="task-title">{{ task.title }}</div>
                             {% if task.description %}
                                 <div class="task-description">{{ task.description }}</div>
                             {% endif %}
-                            <small>Creada: {{ task.created_at }}</small>
+                            <div class="task-meta">Creada: {{ task.created_at }}</div>
                         </div>
-                        <span class="task-status">{{ task.status }}</span>
+                        <div class="task-actions">
+                            <span class="task-status">{{ task.status }}</span>
+                            {% if task.status == 'pendiente' %}
+                                <a href="{{ url_for('complete_task', task_id=task.id) }}" class="action-button complete">Completar</a>
+                            {% else %}
+                                <a href="#" class="action-button complete" style="opacity: 0.6; cursor: not-allowed;">Completar</a>
+                            {% endif %}
+                            <a href="{{ url_for('delete_task', task_id=task.id) }}" class="action-button delete" onclick="return confirm('Estas seguro de que quieres eliminar esta tarea?');">Eliminar</a>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
