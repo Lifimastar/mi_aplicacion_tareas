@@ -22,13 +22,95 @@
             max-width: 800px;
             margin: 0 auto;
         }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+        }
+        .task-list {
+            margin-top: 20px;
+        }
+        .task-item {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-item.completed {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+        .task-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .task-description {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .task-status {
+            font-size: 0.8em;
+            color: #007bff;
+            background-color: #e0f7fa;
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+        .task-item.completed .task-status {
+            background-color: #28a745;
+            color: white;
+        }
+        .no-tasks {
+            text-align: center;
+            color: #6c757d;
+            margin-top: 30px;
+        }
+        .add-task-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .add-task-link:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hola, mundo desde Flask!</h1>
-        <p>Esta es tu primera aplicacion web con Python.</p>
-        <p>Vamos a construir un gestor de tareas!</p>
+        <h1>Mi Lista de Tareas</h1>
+        <a href="#" class="add-task-link">Anadir Nueva Tarea</a>
+
+        <div class="task-list">
+            {% if tasks %}
+                {% for task in tasks %}
+                    <div class="task-item {% if task.status == 'completada' %}completed{% endif %}">
+                        <div>
+                            <div class="task-title">{{ task.title }}</div>
+                            {% if task.description %}
+                                <div class="task-description">{{ task.description }}</div>
+                            {% endif %}
+                            <small>Creada: {{ task.created_at }}</small>
+                        </div>
+                        <span class="task-status">{{ task.status }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <p class="no-tasks">No hay tareas aun. Anade una!</p>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>

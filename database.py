@@ -28,7 +28,7 @@ def init_db():
     """)
     conn.commit()
     conn.close()
-    print("Base de datos inicializada y tabla 'tasks' creada (si no existia).")
+    print(f"Base de datos '{DATABASE}' inicializada y tabla 'tasks' creada (si no existia).")
 
 if __name__ == '__main__':
     init_db()
