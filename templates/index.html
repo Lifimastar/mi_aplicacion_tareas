@@ -70,28 +70,64 @@
             color: #6c757d;
             margin-top: 30px;
         }
-        .add-task-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
+        .add-task-form {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e6ea;
         }
-        .add-task-link:hover {
-            background-color: #0056b3;
+        .add-task-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .add-task-form input[type='text'],
+        .add-task-from textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .add-task-form textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .add-task-form button {
+            display: block;
+            margin-top: 10px;
+
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .add-task-form button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Mi Lista de Tareas</h1>
-        <a href="#" class="add-task-link">Anadir Nueva Tarea</a>
+
+        {# Formulario para anadir nuevas tareas #}
+        <div class="add-task-form">
+            <h2>Anadir Nueva Tarea</h2>
+            <form method="POST" action="{{ url_for('home') }}">
+                <label for="title">Titulo:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="description">Descripcion (opcional):</label>
+                <textarea name="description" id="description"></textarea>
+
+                <button type="submit">Anadir Tarea</button>
+            </form>
+        </div>
 
         <div class="task-list">
             {% if tasks %}
