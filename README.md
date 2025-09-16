@@ -27,7 +27,7 @@ Este es un proyecto de aplicación web simple desarrollado con Flask en Python. 
 5. Ejecutar la app (`python app.py`).
 6. Acceder en el navegador (`http://127.0.0.1:5000`).
 
-![example](assets/example_tarea.gif){ .imagepercent }
+<img src="assets/example_tarea.gif" alt="example" width="500">
 
 ## Autor
 [Lifimastar](https://github.com/Lifimastar)
